@@ -1,0 +1,3 @@
+=== Running benchmark for model: gemini ===
+Scores: {'task1': 10, 'task2': 10, 'task3': 10, 'task4': 5} Total: 35
+

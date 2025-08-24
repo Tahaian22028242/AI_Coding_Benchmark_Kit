@@ -1,0 +1,29 @@
+{
+  "results": [
+    {
+      "task": "task1",
+      "score": 10.0,
+      "accuracy": 1.0,
+      "perf_bonus": 1.0,
+      "time_small_inputs": 0.0
+    },
+    {
+      "task": "task2",
+      "score": 10.0,
+      "accuracy": 1.0,
+      "time": 0.001
+    },
+    {
+      "task": "task3",
+      "score": 7,
+      "num_tests": 0,
+      "passed": true
+    },
+    {
+      "task": "task4",
+      "score": 10.0,
+      "time_opt": 0.0
+    }
+  ],
+  "total": 37.0
+}

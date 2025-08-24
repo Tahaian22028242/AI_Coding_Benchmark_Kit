@@ -1,0 +1,24 @@
+{
+  "gemini": {
+    "returncode": 0,
+    "scores": {
+      "task1": 10,
+      "task2": 10,
+      "task3": 10,
+      "task4": 5
+    },
+    "total": 35,
+    "raw_output": "C:\\Users\\Admin\\Downloads\\ai_coding_benchmark_kit\\ai_benchmark\\results\\gemini.txt"
+  },
+  "gpt_4o": {
+    "returncode": 0,
+    "scores": {
+      "task1": 10,
+      "task2": 10,
+      "task3": 10,
+      "task4": 5
+    },
+    "total": 35,
+    "raw_output": "C:\\Users\\Admin\\Downloads\\ai_coding_benchmark_kit\\ai_benchmark\\results\\gpt_4o.txt"
+  }
+}
