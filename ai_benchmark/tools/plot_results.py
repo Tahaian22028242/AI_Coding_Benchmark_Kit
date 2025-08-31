@@ -1,7 +1,6 @@
 import os
 import csv
 import matplotlib.pyplot as plt
-from collections import defaultdict
 
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 RESULTS_DIR = os.path.join(PROJECT_ROOT, 'results')
