@@ -1,2 +1,9 @@
 pytest==8.2.0
+anthropic
+google-generativeai
+evalplus
+fire
+matplotlib
+pandas
+tqdm
 
