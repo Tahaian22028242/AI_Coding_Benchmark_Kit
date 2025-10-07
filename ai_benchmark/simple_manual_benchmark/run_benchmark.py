@@ -6,8 +6,9 @@ import time
 import traceback
 import subprocess
 
-TASKS_DIR = "tasks"
-OUTPUTS_DIR = "ai_outputs"
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__)) # dòng này được thêm vào để xác định thư mục hiện tại của script
+TASKS_DIR = os.path.join(SCRIPT_DIR, "tasks")
+OUTPUTS_DIR = os.path.join(SCRIPT_DIR, "ai_outputs")
 
 def load_module(path, module_name):
     """Dynamically load module from file path."""
@@ -57,7 +58,7 @@ def score_task3(model_dir):
         test_file = os.path.join(model_dir, "test_task3.py")
         # run pytest with a timeout to avoid hangs
         result = subprocess.run(
-            ["pytest", "-q", test_file],
+            [sys.executable, "-m", "pytest", "-q", test_file],
             capture_output=True, text=True,
             timeout=20
         )
