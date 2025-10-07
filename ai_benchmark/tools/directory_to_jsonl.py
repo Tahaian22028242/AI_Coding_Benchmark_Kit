@@ -13,15 +13,31 @@ for f in IN_DIR.glob('*.py'):
     name = f.stem
     if '_' not in name:
         continue
-    task_id, model_name = name.split('_', 1)
+    parts = name.split('_')
+    if len(parts) < 3:
+        continue
+    task_id = f"{parts[0]}/{parts[1]}"
+    model_name = '_'.join(parts[2:])
 
     with open(f, encoding='utf-8') as file:
         code = file.read()
-
+    # Extract only code block starting from first 'def ' or 'class '
+    lines = code.splitlines()
+    code_lines = []
+    start = False
+    for line in lines:
+        if not start and (line.strip().startswith('def ') or line.strip().startswith('class ')):
+            start = True
+        if start:
+            # Skip markdown block lines
+            if line.strip().startswith('```'):
+                continue
+            code_lines.append(line)
+    code_clean = '\n'.join(code_lines).strip()
     items.append({
         "task_id": task_id,
         "model": model_name,
-        "completion": code
+        "completion": code_clean
     })
 
 with open(OUT_FILE, 'w', encoding='utf-8') as out:

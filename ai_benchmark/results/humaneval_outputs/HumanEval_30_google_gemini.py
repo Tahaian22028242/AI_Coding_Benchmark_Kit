@@ -12,8 +12,6 @@ def get_positive(l: list):
 
 # Model: google_gemini
 
-# ERROR: 
-  No API_KEY or ADC found. Please either:
-    - Set the `GOOGLE_API_KEY` environment variable.
-    - Manually pass the key with `genai.configure(api_key=my_api_key)`.
-    - Or set up Application Default Credentials, see https://ai.google.dev/gemini-api/docs/oauth for more information.
+```python
+    return [x for x in l if x > 0]
+```

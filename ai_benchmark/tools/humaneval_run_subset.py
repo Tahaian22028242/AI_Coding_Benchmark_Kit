@@ -21,6 +21,7 @@ try:
     import google.generativeai as genai
 except ImportError:
     genai = None
+genai.configure(api_key=os.getenv('GOOGLE_API_KEY'))
 
 # CONFIG: Set API keys qua biến môi trường hoặc sửa trực tiếp
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
@@ -63,7 +64,7 @@ def call_anthropic(prompt, model='claude-3-sonnet-20240229', max_tokens=512):
     )
     return response.content[0].text
 
-def call_gemini(prompt, model='gemini-pro', max_tokens=512):
+def call_gemini(prompt, model='models/gemini-2.5-pro-preview-05-06'):
     if not genai:
         return '# google-generativeai library not installed'
     genai.configure(api_key=GOOGLE_API_KEY)
@@ -74,8 +75,8 @@ def call_gemini(prompt, model='gemini-pro', max_tokens=512):
 def main():
     problems = read_humaneval(DATA_PATH)
     models = {
-        'openai_gpt4o': lambda prompt: call_openai(prompt, model='gpt-4o'),
-        'google_gemini': lambda prompt: call_gemini(prompt, model='gemini-pro'),
+        # 'openai_gpt4o': lambda prompt: call_openai(prompt, model='gpt-4o'),
+        'google_gemini': lambda prompt: call_gemini(prompt, model='models/gemini-2.5-pro-preview-05-06'),
         # 'anthropic_claude': lambda prompt: call_anthropic(prompt),
     }
     for prob in problems:

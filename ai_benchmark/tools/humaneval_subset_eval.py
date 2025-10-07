@@ -5,44 +5,46 @@ import importlib.util
 import sys
 from pathlib import Path
 
-# Thư mục chứa code mà humaneval_run.py đã sinh
-OUT_DIR = Path(__file__).parent.parent / "results" / "humaneval_outputs"
+OUT_DIR = Path(__file__).parent.parent / "results" / "humaneval_clean"
 if not OUT_DIR.exists():
-    print(f"Output directory {OUT_DIR} does not exist.")
+    print(f"Output directory {OUT_DIR} does not exist. Hãy chạy script clean_humaneval_outputs.py trước!")
     sys.exit(1)
 
-# Subset bài toán muốn test
 TASKS = {
-    "HumanEval/0": {  # Add two numbers
+    "HumanEval/0": {
+        "func": "has_close_elements",
         "tests": [
-            ("add(1, 2)", 3),
-            ("add(-5, 7)", 2),
+            ("has_close_elements([1.0, 2.0, 3.0], 0.5)", False),
+            ("has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)", True),
+            ("has_close_elements([1.0, 1.0, 1.0], 0.1)", True),
         ],
     },
-    "HumanEval/5": {  # Is prime
+    "HumanEval/5": {
+        "func": "intersperse",
         "tests": [
-            ("is_prime(2)", True),
-            ("is_prime(15)", False),
-            ("is_prime(17)", True),
+            ("intersperse([], 4)", []),
+            ("intersperse([1, 2, 3], 4)", [1, 4, 2, 4, 3]),
         ],
     },
-    "HumanEval/10": {  # Fibonacci
+    "HumanEval/10": {
+        "func": "is_palindrome",
         "tests": [
-            ("fibonacci(0)", 0),
-            ("fibonacci(5)", 5),
-            ("fibonacci(10)", 55),
+            ("is_palindrome('racecar')", True),
+            ("is_palindrome('hello')", False),
         ],
     },
-    "HumanEval/20": {  # Reverse string
+    "HumanEval/20": {
+        "func": "find_closest_elements",
         "tests": [
-            ("reverse_string('abc')", "cba"),
-            ("reverse_string('racecar')", "racecar"),
+            ("find_closest_elements([1.0, 2.0, 3.0, 4.0, 5.0, 2.2])", (2.0, 2.2)),
+            ("find_closest_elements([1.0, 2.0, 3.0, 4.0, 5.0, 2.0])", (2.0, 2.0)),
         ],
     },
-    "HumanEval/30": {  # Factorial
+    "HumanEval/30": {
+        "func": "get_positive",
         "tests": [
-            ("factorial(0)", 1),
-            ("factorial(5)", 120),
+            ("get_positive([-1, 2, -4, 5, 6])", [2, 5, 6]),
+            ("get_positive([5, 3, -5, 2, -3, 3, 9, 0, 123, 1, -10])", [5, 3, 2, 3, 9, 123, 1]),
         ],
     },
 }
@@ -54,7 +56,7 @@ def run_tests(pyfile, task):
     try:
         spec.loader.exec_module(mod)
     except Exception as e:
-        return False, f"ImportError: {e}"
+        return False, f"ImportError (có thể do syntax hoặc code không hợp lệ): {e}"
 
     passed = 0
     total = len(TASKS[task]["tests"])
