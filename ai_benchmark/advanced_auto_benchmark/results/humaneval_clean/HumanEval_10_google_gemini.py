@@ -1,20 +1,18 @@
 
     if not string:
-        return ""
+        return ''
 
     for i in range(len(string)):
         suffix = string[i:]
         if is_palindrome(suffix):
-            # The first palindromic suffix found when iterating from the start
-            # of the string corresponds to the longest one.
-            # The prefix is the part of the string that comes before this suffix.
+            # Found the longest palindromic suffix. It's `string[i:]`.
+            # The part that needs to be mirrored is the prefix before this suffix.
             prefix = string[:i]
-            
-            # To make the entire string a palindrome, we append the reverse of
-            # the prefix to the original string.
+            # Append the reverse of the prefix to the original string.
             return string + prefix[::-1]
     
-    # This line is theoretically unreachable for non-empty strings, as a single
-    # character suffix is always a palindrome. It's included for completeness,
-    # though the loop above will always return a value.
+    # This line is technically unreachable for any non-empty string,
+    # as the last character of any string is a palindrome by itself.
+    # The loop will always find a match at i = len(string) - 1 at the latest.
+    # It is included for logical completeness in case of unexpected behavior.
     return string

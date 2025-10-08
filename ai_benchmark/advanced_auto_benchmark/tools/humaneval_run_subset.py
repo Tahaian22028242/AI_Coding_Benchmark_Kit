@@ -21,12 +21,12 @@ try:
     import google.generativeai as genai
 except ImportError:
     genai = None
-genai.configure(api_key=os.getenv('GOOGLE_API_KEY'))
 
 # CONFIG: Set API keys qua biến môi trường hoặc sửa trực tiếp
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 ANTHROPIC_API_KEY = os.getenv('ANTHROPIC_API_KEY')
 GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
+GEMINI_MODEL = 'gemini-2.5-pro'
 
 # Dataset HumanEval
 DATA_PATH = Path(__file__).parent.parent / 'human-eval-master' / 'data' / 'human-eval-v2-20210705.jsonl'
@@ -36,7 +36,7 @@ OUT_DIR.mkdir(parents=True, exist_ok=True)
 # Subset task IDs muốn chạy
 SUBSET_IDS = {"HumanEval/0", "HumanEval/5", "HumanEval/10", "HumanEval/20", "HumanEval/30"}
 
-def read_humaneval(path):
+def read_humaneval(path): # đọc file jsonl
     problems = []
     with open(path, encoding='utf-8') as f:
         for line in f:
@@ -64,10 +64,10 @@ def call_anthropic(prompt, model='claude-3-sonnet-20240229', max_tokens=512):
     )
     return response.content[0].text
 
-def call_gemini(prompt, model='models/gemini-2.5-pro-preview-05-06'):
+def call_gemini(prompt, model=GEMINI_MODEL):
     if not genai:
         return '# google-generativeai library not installed'
-    genai.configure(api_key=GOOGLE_API_KEY)
+    genai.configure(api_key=os.getenv('GOOGLE_API_KEY'))
     model = genai.GenerativeModel(model)
     response = model.generate_content(prompt)
     return response.text
@@ -76,7 +76,7 @@ def main():
     problems = read_humaneval(DATA_PATH)
     models = {
         # 'openai_gpt4o': lambda prompt: call_openai(prompt, model='gpt-4o'),
-        'google_gemini': lambda prompt: call_gemini(prompt, model='models/gemini-2.5-pro-preview-05-06'),
+        'google_gemini': lambda prompt: call_gemini(prompt, model=GEMINI_MODEL),
         # 'anthropic_claude': lambda prompt: call_anthropic(prompt),
     }
     for prob in problems:

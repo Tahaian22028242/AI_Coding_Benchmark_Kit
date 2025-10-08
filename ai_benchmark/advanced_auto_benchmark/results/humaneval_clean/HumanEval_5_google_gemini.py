@@ -13,12 +13,12 @@ def intersperse(numbers: List[int], delimeter: int) -> List[int]:
         return []
 
     result = []
-    # Iterate through all numbers except the last one
+    # Iterate through all elements except the last one
     for number in numbers[:-1]:
-        # For each of these, add the number and the delimeter to the result list
-        result.extend([number, delimeter])
+        result.append(number)
+        result.append(delimeter)
     
-    # Finally, append the last number from the original list, which doesn't get a delimeter after it.
+    # Add the last element without a delimeter after it
     result.append(numbers[-1])
     
     return result
