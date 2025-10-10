@@ -2,9 +2,6 @@ import os
 from pathlib import Path
 import re
 
-
-
-
 IN_DIR = Path(__file__).parent.parent / 'results' / 'humaneval_outputs'
 OUT_DIR = Path(__file__).parent.parent / 'results' / 'humaneval_clean'
 OUT_DIR.mkdir(exist_ok=True)
